@@ -1,0 +1,127 @@
+
+\begin{definition}
+    Given $F : \cat{C} \to \cat{D}$ and $x : \cat{D}$ we can define the slice category over $F$ as the pullback:
+    \[\begin{tikzcd}
+        \cat{C}_{/F} \ar[r] \ar[d] & \cat{D}_{/x} \ar[d] \\
+        \cat{C} \ar[r] & \cat{D}
+    \end{tikzcd}\]
+    Explicitly objects are given as pairs $c : \cat{C}$ and morphisms $Fc \to x$.
+\end{definition}
+
+\begin{example}
+    Over the Yoneda embedding $\yo : \cat{C} \to \hat{\cat{C}}$ and $F : \hat{\cat{C}}$ we have an element of 
+    $\cat{C}_{/F}$ is a pair of $c : \cat{C}$ and a morphism $\yo_c \to F$, that is an element $F(c)$. 
+\end{example}
+
+\begin{lemma}
+    Given $F : \cat{C}^\op \to \Set$ the natural map $\colim_{c \in \cat{C}_{/F}} \yo_c \to F$
+    is an equivalence
+\end{lemma}
+\begin{proof}
+    The natural map is given by choosing, for each $c : \cat{C}_{/F}$, the specified map $\yo_c \to F$.
+
+    We have equivalences, for each presheaf $G$
+    \[\hom_{\hat{\cat{C}}}( \colim_{c : \cat{C}_{/F}} \yo_c , G) 
+    \cong \lim_{c \in \cat{C}_{/F}} \hom(\yo_c, G) \cong \lim_{c \in \cat{C}_{/F}} G(c) \simeq \hom(F, G) \] 
+    giving the natural equivalence by Yoneda.
+    The last equivalence is quick to check by hand.
+\end{proof}
+
+\begin{definition}[Kan extension (over inclusions)]
+    Given $i : \cat{C}_0 \subseteq \cat{C}$, the inclusion of a subcategory, and $\cat{D}$ a (co)complete category,
+    the restriction functor $i^\ast : \hom(\cat{C}, \cat{D}) \to \hom(\cat{C}_0, \cat{D})$ has left and right adjoints,
+    given by 
+    \[ i_!(F)(x) = \colim_{c \in \cat{C}_0 / x} F(c) \]
+    \[ i_\ast(F)(x) = \lim_{c \in \cat{C}_0} F(c) \]
+\end{definition}
+
+
+
+\subsection{Simplicial sets}
+
+We define the category $\Delta$ with objects given by $[n] = \{0, \ldots, n\}$ and morphisms given by monotone maps.
+We define the category $\sSet$ to be presheaves on $\Delta$.
+We denote the yoneda embedding of $n$ to be $\Delta^n$. 
+This gives ``expected'' geometric results, such as $\hom_{\sSet}(\Delta^n, X) = X_n$, the $n$-simplices of $X$ are given by morphisms of $n$-simplices.
+
+\begin{lemma}
+    Given a simplicial set $X$, we have 
+    \[X \cong \colim_{ [n] \in \Delta/X} \Delta^n \] 
+\end{lemma}
+\begin{proof}
+    This is exactly the fact that presheaves are colimits of representables.
+\end{proof}
+
+\begin{definition}
+    In the category of topological spaces, we define $\Delta^n_\mathrm{Top}$ to be the subset of $\bR^{n+1}$ of tuples who sum to $1$.
+    This defines a cosimplicial object in $\mathrm{Top}$ by 
+    \[ [n] \mapsto \Delta^n_{\mathrm{Top}} \]
+    \[ f : [n] \to [m] \mapsto f_*\]
+    where $f_*$ is the unique affine linear extension of the map sending vertices of $\Delta^n_{\mathrm{Top}}$ to their image under $f$.
+    More precisely:
+    \[ f_*(t_0, \ldots t_n) = (v_0, \ldots, v_m)\]
+    where
+    \[ v_m = \sum_{j \in f^{-1}(i)} t_j\] 
+\end{definition}
+
+\begin{definition}
+    Given a topological space $X$, its singular simplicial set is given by 
+    \[S(X) = [n] \mapsto \hom(\Delta^n_{\mathrm{Top}}, X)\].
+
+    We have a functor in the opposite direction given by Kan extension of the map sending $\Delta^n \mapsto \Delta^n_{\mathrm{Top}}$.
+    Explicitly
+    \[ |X| = \colim_{\Delta^n \in \Delta_{/X}} \Delta^n_{\mathrm{Top}}\]
+
+    We have $| \_ |$ is left adjoint to $S$.
+\end{definition}
+
+\begin{definition}
+    \begin{enumerate}
+        \item $\partial \Delta^n$ has $m$-cells given by non-surjective $[m] \to [n]$.
+        \item Given $S \subseteq [n]$ the \textbf{horn} $\Lambda^n_S$ has $m$-cells given $f : [m] \to [n]$ so there is $i \in [n] \backslash S$ s.t. $i \notin \mathrm{im}(f)$.
+        \item The \textbf{spine} $I^n$ has $m$-cells given by $[m] \to [n]$ with image $\{j\}$ or $\{j, j+1\}$.
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}
+    We can form the subcategory $\Delta_{\leq n} \subseteq \Delta$.
+    The natural adjunction given by kan extending the inclusion gives monads on simplicial sets called the skeleta and coskeleta.
+    Specifically
+    \[\mathrm{sk}_n(X) = i_! i^\ast X \]
+    \[\mathrm{cosk}_n(X) = i_* i^\ast X \]
+    We have $\mathrm{cosk}_n(X)_k = \hom(\mathrm{sk}_n(\Delta^k), X)$
+\end{definition}
+
+\begin{definition}
+    Given a category $\cC$, its nerve is the simplicial set given by 
+    \[ [n] \mapsto \hom([n], \cC) \]
+    That is chains of $n$ composable maps.
+\end{definition}
+
+\begin{definition}
+    Given a group $G$ its classifying space is the geometric realisation of its nerve as a category with one object.
+\end{definition}
+
+\begin{definition}
+    A \textbf{Kan complex} is a simplicial set $X$ such that for all Horns $\Delta^n_j$ there are solutions to lifting problems
+    \[\begin{tikzcd}
+        \Delta^n_j \ar[d] \ar[r] & X \\
+        \Delta^n \ar[ur, dashed]
+    \end{tikzcd}\]
+\end{definition}
+
+\begin{example}
+    The singular simplicial set of a topological space is a Kan complex.
+    This follows quickly by adjunction, noting that a horn is a retract of $\Delta^n$ in topological spaces.
+\end{example}
+
+\begin{example}
+    The nerve of a category is a Kan complex if and only if the category is a groupoid.
+\end{example}
+
+\begin{definition}
+    Given $f, g : X \to Y$ maps of simplicial sets, we say they are homotopic if there exist a map $H : \Delta^1 \times X \to Y$ restricting to $f, g$ on boundary.
+    We can define the simplicial homotopy groups as homotopy classes of maps $(\Delta^n, \partial \Delta^n) \to (X, x)$.
+\end{definition}
+
+

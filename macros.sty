@@ -1,0 +1,74 @@
+%%%%%%% LOGIC %%%%%%%
+
+\newcommand{\Sort}{\mathrm{Sort}}
+\newcommand{\Rel}{\mathrm{Rel}}
+\newcommand{\Fun}{\mathrm{Fun}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Term}{\mathrm{Term}}
+\newcommand{\Fmla}{\mathrm{Form}}
+\newcommand{\Mod}[1]{\operatorname{Mod}(#1)}
+\newcommand{\Modfp}[1]{\operatorname{Mod}_{\mathrm{fp}}(#1)}
+
+%%%%%%%% FONT TIMESAVES %%%%%%%
+\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bI}{\mathbb{I}}
+
+\newcommand{\cC}{\mathcal{C}}
+
+%%%%%%%% CATEGORY THEORY %%%%%%%
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\op}{\mathrm{op}}
+\DeclareMathOperator{\Hom}{Hom}
+
+\newcommand{\cat}[1]{\mathcal{#1}}
+\newcommand{\Set}{\mathrm{Set}}
+\newcommand{\sSet}{\mathrm{sSet}}
+
+\DeclareFontFamily{U}{dmjhira}{}
+\DeclareFontShape{U}{dmjhira}{m}{n}{ <-> dmjhira }{}
+
+\DeclareRobustCommand{\yo}{\text{\usefont{U}{dmjhira}{m}{n}\symbol{"48}}}
+
+\def\colim{\qopname\relax m{colim}}
+
+\newcommand{\inl}{\operatorname{inl}}
+\newcommand{\inr}{\operatorname{inr}}
+
+\newcommand*{\triple}[2][.1ex]{%
+  \mathrel{\vcenter{\offinterlineskip%
+  \hbox{$#2$}\vskip#1\hbox{$#2$}\vskip#1\hbox{$#2$}}}}
+
+\newcommand*{\triplerightarrow}{\triple{\rightarrow}}
+
+%%%%%%%%% GEOMTERY %%%%%%%%%%%%%%
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Zar}{\mathrm{Zar}}
+
+%%%%%%%%% TYPE THEORY %%%%%%%%%%%
+\newcommand{\OO}{\bigcirc}
+\newcommand{\UU}{\mathcal{U}}
+\newcommand{\isEquiv}{\bibopenparen{isEquiv}}
+\newcommand{\hlevel}{\mathrm{hlevel}}
+\newcommand{\isContr}{\operatorname{isContr}}
+\newcommand{\isProp}{\operatorname{isProp}}
+\newcommand{\Prop}{\mathrm{Prop}}
+\newcommand{\refl}{\mathrm{refl}}
+\newcommand{\isModal}{\operatorname{isModal}}
+\newcommand{\ap}{\operatorname{ap}}
+\newcommand{\fib}{\operatorname{fib}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\tot}{\mathrm{tot}}
+\newcommand{\funext}{\operatorname{funExt}}
+\newcommand{\pt}{\mathrm{pt}}
+\newcommand{\glue}{\mathrm{glue}}
+
+\DeclarePairedDelimiter\Trunc{\lVert}{\rVert} % truncated type
+\DeclarePairedDelimiter\trunc{\lvert}{\rvert} % truncation constructor
+\DeclarePairedDelimiter\abs{\lvert}{\rvert} % absolute value
+\DeclarePairedDelimiterX\setof[2]\lbrace\rbrace{\, #1 \,\delimsize\vert\, #2 \,}
+
+
+%%%%%%%% MISC %%%%%%%%%
+\newcommand\todo[1]{\textcolor{red}{TODO: #1}}
