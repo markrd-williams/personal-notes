@@ -1,0 +1,136 @@
+\documentclass{article}
+
+\usepackage{../packages}
+\usepackage{../macros}
+
+\title{Virtual Sets}
+\author{mark}
+
+\begin{document}
+\maketitle
+
+\begin{definition}
+    Given an injective map $f : X + A \to Y + A$, where $A$ is finite, we define a new map 
+    \[ (f - A) : X \to Y \] 
+    \[  (f-A)(x) = \begin{cases}
+        y & \text{ if } f(x) = y : Y \\
+        f_A(a) & \text{ if } f(x) = a : A 
+    \end{cases} \]
+
+    Where we define a helper for each $S \subseteq A$ 
+    \[ f_S : S \to Y \]
+    \[ f_S(a) = \begin{cases}
+        y & \text{ if } f(a) = y : Y \\
+        f_{S \backslash a}(a')&  \text{ if } f(a) = a' : A
+    \end{cases}\]
+
+    Note by injectivity of $f$ we have that $a$ and $a'$ are different, 
+    and since $A$, we will eventually hit an element of $Y$.
+\end{definition}
+
+We can prove a number of addition rules for these functions
+\begin{lemma}
+    Given $f : X \to Y$ we have $(f + A) - A = f$.
+\end{lemma}
+\begin{proof}
+    For any $x : X$ we have $(f + A)(\inl x) = \inl f(x) : Y$.
+    Hence we see by definition that  $((f + A) - A)(x) = f(x)$.
+\end{proof}
+
+\begin{lemma}
+    Given $f : X + A \to Y + A$ with $A$ finite, for any set $B$ we have
+    \[ (f - A) + B = (f + B) - A \]
+\end{lemma}
+\begin{proof}
+    Note for any $b : B$ we have $((f + B) - A)(b) = b$ by definition.
+    and for $x : X$ we have $(f + B)(x) = f(x)$, and similarly for any $a : A$. 
+    Unwinding definitions makes it clear that $f_A$ and $(f + B)_A$ are the same function,
+    and further that $((f + B) - A)(x) = (f - A)(x)$.
+\end{proof}
+
+\begin{lemma}
+    Given $f : X + A + B \to Y + A + B$ we have $(f - B) - A = f - (A + B)$.
+\end{lemma}
+\begin{proof}
+    Need to come up with a better way of seeing this but we can redefine the notion of subtraction in the following way:
+    For an easier way to see this think of a function $X + A \to Y + A$ as a kind of graph on the vertex set $X + A + Y + B$, with edges $x \to f(x)$.
+    Then we can take a graph quotient identifying the two copies of $A$ and the left copy of $A$ with its image under $f$
+    So $\inl a \sim \inr a$ and $\inl a ~ f(a)$.
+    Taking thsi graph quotient results in the graph of the function $f - A : X \to Y$. 
+    This is a kind of ``small step'' reduction process to produce $f - A$.
+    Then we can see clearly that $f - B - A = f - (A + B)$ by just checking the two equivalence relations are the same, which they clearly are.
+\end{proof}
+
+\begin{lemma}
+    We have $(g + A) \circ f - A = g \circ (f - A)$.
+    Similarly $g \circ (f + A) = (g - A) \circ f$.
+\end{lemma}
+
+
+Given these we are now in a position to work with virtual sets.
+
+\begin{definition}
+    The category of virtual sets is given by 
+    \begin{itemize}
+        \item Objects pairs of finite sets $(X^+, X^-)$
+        \item Morphisms $X \to Y$ given by an injective map $X^+ + Y^- \to Y^+ + X^-$.
+        \item Identities given by identity maps
+        \item Composition given by the following construction. Given $f : X^+ + Y^- \to Y^+ + X^-$ and $g : Y^+ + Z^- \to Z^+ + Y^-$ we define a map
+        \begin{align*}
+            h : X^+ + Z^- + Y^- &\xrightarrow{f + Z^-} Y^+ + Z^- + X^- \\ 
+                            &\xrightarrow{g + X^-} Z^+ + Y^- + X^- \\
+                            &\xrightarrow{\; \; \; \; \sim \; \; \; \;  }  Z^+ + X^- + Y^- 
+        \end{align*}
+        We will continue to abuse coherences and just write $h$ as $(g + X^-) \circ (f + Z^-)$.       
+        The composition is given by $g \circ f := h - Y^-$. 
+    \end{itemize}
+\end{definition}
+
+We now check that composition is associative.
+\begin{proposition}
+    Composition is associative.
+\end{proposition}
+\begin{proof}
+    Let $f : A \to B$, $g : B \to C$ and $h : C \to D$.
+    Then we calculate using the lemmas before
+    \[ g \circ f = (g + A^-) \circ (f + C^-) - B^-\]
+    \begin{align*}
+        h \circ (g \circ f) 
+        &= (h + A^-) \circ (g \circ f + D^-) - C^- 
+        \\&= (h + A^-) \circ ( ((g + A^-) \circ (f + C^-) - B^- ) + D^-) - C^-
+        \\&= (h + A^-) \circ ( ((g + A^-) \circ (f + C^-) + D^- ) - B^-) - C^-
+        \\&= (h + A^-) \circ  ((g + A^- + D^-) \circ (f + C^- + D^-) - B^-) - C^-
+        \\&= (h + A^- + B^-) \circ ((g + A^- + D^-) \circ (f + C^- + D^-)) - B^- - C^-
+        \\&= (h + A^- + B^-) \circ (g + A^- + D^-) \circ (f + C^- + D^-) - (C^- + B^-)
+    \end{align*} 
+    Which is precisely the natural ``triple composition'' given between three morphisms.
+
+    Similarly we have 
+    \[ h \circ g = (h + B^-) \circ (g + D^-) - C^- \]
+    \begin{align*}
+        (h \circ g) \circ f 
+        &= (h \circ g + A^-) \circ (f + D^-) - B^- 
+        \\&= (((h + B^-) \circ (g + D^-) - C^-) + A^-) \circ (f + D^-) - B^-
+        \\&=  (((h + B^-) \circ (g + D^-) + A^-) - C^-) \circ (f + D^-) - B^-
+        \\&= ((h + B^- + A^-) \circ (g + D^- + A^-) - C^-) \circ (f + D^-) - B^-
+        \\&= ((h + B^- + A^-) \circ (g + D^- + A^-)) \circ (f + D^- + C^-) - C^- - B^-
+        \\&=  (h + B^- + A^-) \circ (g + D^- + A^-) \circ (f + D^- + C^-) - (B^- + C^-)
+        \\&=  (h + B^- + A^-) \circ (g + D^- + A^-) \circ (f + D^- + C^-) - (C^- + B^-)
+    \end{align*} 
+\end{proof}
+
+\begin{remark}
+    Here is a relatively convincing reason why this category might not be correct: two objects are only isomorphic if their pairs of objects are isomorphic.
+    This is unlike the intuition that we would expect $(3, 2) \simeq (2, 1)$.
+
+    We prove this now. Suppose $X \simeq Y$ in the category. 
+    Suppose they don't have the same size (this is fine because of decidabilty).
+    WLoG suppose $| Y^+ | < | X^+ |$.
+    Call $f : X \to Y$ and $g : Y \to X$ the functions in the isomorphism.
+    Then note that for some $x^+ : X^+$ we must have $f(x^+) \in X^-$, due to size.
+    Then by definition $(g + X^-)( (f + X^-)(x^+) ) = f(x^+)$, since $g$ acts constantly on this copy of $X^-$. 
+    Then clearly $(g \circ f)(x^+) = f(x^+) \neq x^+$. 
+    So we must have $| Y^+ | \geq | X^+ |$
+    Arguing dually we see that $|Y^+| = |X^+|$ and so we deduce $|Y^-| = |X^-|$.
+\end{remark}
+\end{document}
