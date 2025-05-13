@@ -1,0 +1,126 @@
+\documentclass{article}
+
+\usepackage{../packages}
+\usepackage{../macros}
+
+\title{$\kappa$-geometric classifying topoi}
+\author{mark}
+
+\begin{document}
+\maketitle
+
+In the course of understanding light condensed sets, and similar flavour of topoi, it is worthwhile to consider large sites, which nonetheless are essentially the classifying topos
+of an algebraic theory - in some sense.
+
+For instance we can consider the classifying topos of boolean algebras, given by presheaves $\Set[\mathrm{Bool}] := [\mathrm{Bool}_{\mathrm{fp}}, \Set]$.
+This has a universal boolean algebra $U : \mathrm{Bool}_{\mathrm{fp}} \to \Set$, given by the forgetful functor.
+This classifies boolean algebras in the sense that it is the image of the identity under the natural isomorphism:
+\[ \mathrm{Geom}(\Set[\mathrm{Bool}], \Set[\mathrm{Bool}]) \simeq \mathrm{Bool}(\Set[\mathrm{Bool}]) \] 
+
+Consider the category of light condensed sets, which is equivalently presented as presheaves $[\mathrm{Bool}_{\mathrm{cp}}, \Set]$.
+This isn't a classifying topos of anything reasonable; in an answer on stack exchange, Peter Scholze finds a theory 
+this topos classifies, but it isn't particularly interesting.
+
+Instead we should imagine that this topos also really classifies the theory of boolean algebras; however the notion of morphism between topoi is not 
+strong enough to make this precise, as they don't preserve the structure of countably presented boolean algebras.
+
+Instead we extend to $\kappa$-geometric morphisms, which allow this correspondence to be made precise.
+Let $\kappa$ be a cardinality/arity class. 
+
+\begin{definition}
+  Then a $\kappa$-geometric morphism $f : \mathscr{E} \to \mathscr{D}$ is a functor 
+  $f^\ast : \mathscr{D} \to \mathscr{E}$ preserving all small colimits, and $\kappa$-ary limits.
+\end{definition}
+
+We will consider the category $\mathbf{Top}$ of Grothendieck topoi, with $\kappa$-geometric morphisms.
+
+\begin{lemma}
+  $\text{TODO}$ is the terminal $\kappa$-complete topos.
+\end{lemma}
+\begin{proof}
+  For any $\mathscr{E}$ we get a functor $\Set \to \mathscr{E}$ given by the usual functor $X \mapsto \bigsqcup_{x \in X} 1$
+  But this doesn't preserve colimits.. 
+  So $\Set$ definitely isn't the terminal topos. 
+\end{proof}
+
+
+\section{Classifying morphisms into sheaf topoi}
+
+\begin{definition}
+  A functor $A : \cC \to \Set$ is called $\kappa$-flat if the left Kan extension along the Yoneda embedding $- \otimes_\cC A : \Psh{\cC} \to \Set$ preserves $\kappa$-ary limits.
+\end{definition}
+
+By definition $\kappa$-flat functors $A : \cC \to \Set$ correspond precisely to $\kappa$-geometric morphisms $\Set \to \Psh{\cC}$.
+
+\begin{definition}
+  A category $I$ is called $\kappa$-filtering if all $\kappa$-ary diagrams in $I$ have a cone.
+
+  A functor $A : \cC \to \Set$ is called $\kappa$-filtering if the category of elements $\ast \downarrow A$ is $\kappa$-filtering.
+\end{definition}
+
+\begin{lemma}
+  A diagram $D : I \to \ast \downarrow A$ is precisely determined by:
+  \begin{itemize}
+    \item A collection $c_i \in \cC$ for $i \in I$. 
+    \item An element $a \in \lim_I A(c_i)$, where we consider the projection diagram in $\cC$.
+  \end{itemize} 
+\end{lemma}
+
+\begin{proposition}
+  A functor $A : \cC \to \Set$ is $\kappa$-flat iff it is $\kappa$-filtering.
+\end{proposition}
+\begin{proof}
+  ($\Rightarrow$) Suppose $A$ is $\kappa$-flat. 
+  Let $D : I \to \ast \downarrow A$ be a $\kappa$-ary diagram.
+  Let $c_i : \cC$ be the projection fo $D(i)$ for $i \in I$.
+  Let $a_i : A(c_i)$ be the second projection of $D(i)$.
+  Then as $A$ preserves $\kappa$-ary limits we have an isomorphism
+  \[ \left ( \lim_{i \in I} \yo c_i \right ) \otimes A \to \lim_{i \in I} (\yo c_i \otimes A) \simeq \lim_{i \in I} A(c_i) \] 
+  The map is given by 
+  \[  w \otimes b \mapsto w_i \cdot b \]
+  Since by assumption for any $f : i \to j$ we have $f_\ast(a_i) = a_j$ we can see that the collection $(a_i)$ forms an element of $\lim_{i \in I} A(c_i)$. 
+  Hence there is $b \in \cC$ and $w_i : b \to c_i$ so that $w_i \cdot b = a_i$ for each $i \in I$.
+  This is precisely a cone over $D$.
+  Hence $A$ is $\kappa$-filtering.
+
+  ($\Leftarrow$) Suppoes $A$ is $\kappa$-filtering. Note by standard arguments in SIGAL, $A$ must be flat. 
+  Hence to show it is $\kappa$ flat it suffices to show that $- \otimes A$ preserves $\kappa$-ary products. \todo{Can't figure this out constructively. Would be easy if we new $\kappa$-filtered colimits and $\kappa$-finite limits commuted. This is relatively straightforward with $\kappa$-ary choice. Not sure if there's a constructive version.}
+\end{proof}
+
+
+\begin{proposition}
+  Suppose $\cC$ is $\kappa$-complete. Then a functor $A : \cC \to \Set$ is $\kappa$-flat iff $A$ is $\kappa$-exact.
+\end{proposition}
+\begin{proof}
+  ($\Rightarrow$) Suppose $A$ is $\kappa$-flat. Then $- \otimes_\cC A$ preserves all $\kappa$-ary limits.
+  But then, as the yoneda embedding preserves all limits we have 
+  \[ A \simeq (- \otimes_\cC A) \circ \yo : \cC \to \Set \]
+  preserves all $\kappa$-ary limits in $\cC$. 
+  Hence $A$ is $\kappa$-complete.
+
+  ($\Leftarrow$) 
+  Suppose $A$ is $\kappa$-complete. 
+  Now suppose $D : I \to \int_{\cC} A$ is a $\kappa$-ary diagram. 
+  Then let $c_i$ be $\pi D(i)$ and $a_i$ be the second projection of $D(i)$. 
+  Then we construct a cone over the diagram to be the object with first projection $\lim_I c_i$ which exists as $\cC$ is $\kappa$-complete.
+  Since $A$ preserves $\kappa$-ary limits we have 
+  $A(\lim_I c_i) \simeq \lim_I A(c_i)$.
+  The collection $a_i \in A(c_i)$ satisfy the condition to form an element of the limit by construction. 
+  Hence we have a single element $a \in A(\lim_I c_i)$ satisfying $\pi_i \cdot a = a_i$. 
+  Thus this is a cone in the diagram category.
+  Hence $A$ is $\kappa$-filtering.
+  Thus by the above $A$ is $\kappa$-flat.
+\end{proof}
+
+
+
+
+\section{Doctrines}
+
+\begin{definition}
+  A doctrine $\mathbb{D}$ is an essentially small class of categories. 
+\end{definition}
+
+
+
+\end{document}

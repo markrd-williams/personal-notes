@@ -1,0 +1,57 @@
+\documentclass{article}
+
+\usepackage{packages}
+\usepackage{macros}
+
+\title{Geometric Type Theory}
+\author{Johannes Schipp von Branitz \and Mark Damuni Williams}
+
+\begin{document}
+\maketitle
+
+
+\section{Introduction}
+
+\section{Axioms}
+
+\begin{enumerate}
+  \item There is a topos $\cB$.
+        \textbf{Remark}: It would be better to say there is a logos $\cB$. 
+        We should imagine $\cB$ comes with algebraic operations; $\mathrm{colim}$ and $\mathrm{lim}$. with corresponding algebraic laws. Some difficulty with this includes presentability.. Maybe this doesn't matter so much internally? 
+
+  \item \todo{Find a property of $\cB$ corresponding to the \'etale topology}
+  \item For every (finitely/countably) presented geometric theory $\bT$, the natural map
+    \[ \cB[\bT] \to (\mathrm{Geom}_{\cB}(\cB[\bT], \cB) \to \cB) \]
+  is an equivalence.
+  \item \'Etale locale choice.
+\end{enumerate}
+
+We introduce notation $\mathrm{Sh}(\mathcal{L}) := \mathrm{Log}_{\cB}(\mathcal{L}, \cB)$. This corresponds to our algebraic/geometric intuition. 
+$\cB$ is our base logos, and  $\mathrm{Sh}(\cB) = 1$.
+$\cB[X]$ is the logos of sets, and $\mathrm{Sh}(\cB[X]) = \cB$.  
+
+\section{Realisation}
+
+Given an object $x : \cB$ there is a realisation $T(x)$ given by $\hom(1, x)$. 
+For instance, take the natural numbers object $N : \cB$.
+Then we have a map $\bN \to T(N)$ given by, for each $n$ taking the internal successor of zero $n$-times. 
+
+We have a universe $\UU_\cB := \Sigma_{x : \cB} \hom(1, x)$.
+\begin{lemma}
+  The universe $\UU_\cB$ is closed under $\Pi$, $\Sigma$, $=$, limits/colimits, $\bN$.
+\end{lemma}
+
+
+More generally given a logos $\cB \to \mathcal{L}$ and an $x : \mathcal{L}$ we 
+have a realisation 
+
+\section{Simplicial aspects}
+
+There are several options for what could be used as an ``interval''.
+There is $\mathcal{S} := [\mathbf{2}, \cB]$ the ``sierpinski'' topos. 
+$\cB$-logos morphisms from $Sh(\mathcal{S}) := \mathcal{S} \to \cB$ correspond to objects of $\cB$ with at most $1$ element. 
+That is $\mathrm{Sh}(\mathcal{S}) = \Omega \subseteq \cB$ is the geometric propositions. 
+
+
+
+\end{document}

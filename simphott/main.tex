@@ -1,0 +1,157 @@
+\documentclass{article}
+
+\usepackage{../packages}
+\usepackage{../macros}
+
+\newcommand{\Oc}{\mathcal{O}^\otimes}
+\newcommand{\cF}{\mathcal{F}}
+
+
+\title{sHoTT algebra}
+\author{mark}
+
+\begin{document}
+\maketitle
+
+\section{Modal Type Theory}
+
+\subsection{Motivation}
+
+For building an internal universe in type theory, classifying fibrations for instance,
+we would love to have a right adjoint to exponentiation by an interval $(\bI \to \_)$.
+
+But this is not possible, and can be proven internally to type theory.
+This is because the right adjoint isn't stable under substitution (pullback) which all type theoretic constructs are.
+
+One way to solve this is to have a modality; an operation not stable under substituation. 
+E.g. we could have $\square$ which takes a type (interpereted as a presheaf) to its constant presheaf of global points.
+Then we could state internally that
+\[ \square (\bI \to Y) \to X \simeq \square Y \to (X_\bI) \]
+To introduce such a $\square$ operation we must change the type theory.
+
+\section{Subcategories}
+
+\begin{theorem}
+  Let $C :_\flat \UU$ be a category.
+  and $\phi :_\sharp \langle \flat \mid C \rangle \to \Prop_{\boxslash}$.
+  Define 
+  \[ C_\phi = \sum_{c : C} \langle \sharp \mid \phi(c^\eta) \rangle \]  
+  Then if $a, b : C_\phi$ we have $\hom_{C_\phi}(a, b) = \hom_{C}(\pi_1(a), \pi_1(b))$.
+
+\end{theorem}
+\begin{proof}
+  We have 
+  \begin{align*}
+    \mathbb{I} \to \sum_{c : C} \langle \sharp \mid \phi(c^\eta) \rangle
+    &= (f : \mathbb{I} \to C) \times ((i : \bI) \to \langle \sharp \mid \phi(f(i)^\eta) \rangle) \\
+    &= (f : \mathbb{I} \to C) \times \langle \sharp \mid (i : \langle \flat \mid \bI^{\eta} \rangle) \to \phi(f(i))  \rangle \\
+    &= (f : \mathbb{I} \to C) \times \langle \sharp \mid (b : 2) \to \phi(f(b)) \rangle \\
+    &= (f : \mathbb{I} \to C) \times \langle \sharp \mid \phi(f(0)) \times \phi(f(1)) \rangle \\
+    &= (f : \mathbb{I} \to C) \times \langle \sharp \mid \phi(f(0)) \rangle \times \langle \sharp \mid \phi(f(1)) \rangle 
+  \end{align*}
+  That is morphisms in $C_\phi$ are morphisms of $C$ whose endpoints are in $C_\phi$.
+\end{proof}
+
+\section{Reflective Localisations}
+
+\begin{definition}
+  We say a map $f : C \to D$ is a localisation if it admits a fully faithful right adjoint $g : D \to C$.
+\end{definition}
+
+\begin{lemma}
+  The following are equivalent:
+  \begin{itemize}
+    \item $f : C \to D$ is a localisation. 
+    \item There exists $g : D \to C$ and a natural isomorphism $\varepsilon : f \circ g \to \id_D$
+    \item $f$ has a right adjoint $g : D \to C$ so that $f \circ g : D \to D$ is an equivalence.
+  \end{itemize}
+\end{lemma}
+\begin{proof}
+  $(1 \Rightarrow 2)$ 
+  Suppose $f : C \to D$ is a localisation. 
+  Then we must show that the unit of the adjunction $\varepsilon : f \circ g \to id_D$ is an equivalence. 
+
+\end{proof}
+
+\begin{proposition}
+  If $f : C \to D$ is a localisation, then for any category $E$, the pullback $f^* : E^D \to E^C$ is fully faithful.
+\end{proposition}
+\begin{proof}
+  We have a chain of equivalences 
+  \[ \Hom(a \circ f, b \circ f) \simeq \Hom(a \circ f \circ g, b \circ f \circ g) \simeq \Hom(a, b)\]
+  as $f \circ g$ is an equivalence.
+\end{proof}
+
+\section{Symmetric monoidal categories}
+\begin{definition}
+  The category of finite types is given by 
+  \[ \mathcal{F} := \mathcal{S}_\phi = \sum_{X : S} \langle \sharp \mid \phi(X^\eta)\rangle \]
+  where 
+  \[ \phi(X) = \boxslash \exists_{n : \bN} X = \mathrm{Fin}(n) \]
+
+  We can similarly define $\cF_\ast$ the category of pointed finite types.
+\end{definition} 
+
+\begin{definition}
+  A morphism $f : (X, x_0) \to (Y, y_0)$ in $\cF_\ast$ is inert if 
+  \[ \prod_{y : Y} (y \neq y_0) \to \isContr( \fib_f(y) ) \]
+\end{definition}
+
+\begin{definition}
+  For each $(X, x_0) : \cF$ and $x : X$ with $x \neq x_0$ we have a pointed map $\delta_x : (X, x_0) \to \langle 1 \rangle$ given by sending $x$ to $1$ and everything else to $0$.
+  A symmetric monoidal category is a cocartesian fibration $\cC^\otimes : \cF_\ast \to \UU$ satisfying:
+  the canonical map
+  \[  \cC^\otimes(X, x_0) \xrightarrow{\langle \delta_x \rangle_x} \prod_{x: X \backslash x_0} \cC^\otimes(\langle 1 \rangle)\] 
+  is an equivalence
+\end{definition}
+
+\begin{example}
+  Let $\cC$ be a category with finite products. Then $\cC$ has a natural symmetric monoidal structure 
+\end{example}
+\begin{proof}
+  Define a family;
+   \[ \cC^\times : \cF_\ast \to \UU \]
+   \[ \cC^\times(X, x_0) = \cC^{X \backslash x_0}  \]
+  This is a cocarteisan fibration. 
+  Let $X, Y : \cF_\ast$, $u : \hom_{\cF_\ast}(X, Y)$, $e : \cC^{X \backslash x_0}$. 
+  By directed univalence, $u : X \to Y$ is a function. We then define an object of $\cC^{Y \backslash y_0}$ by, for $y : Y \backslash y_0$, we have $e'_y := \prod_{x : \fib_u(y)} e_x$ where $\prod$ here is the product in the category $\cC$.
+  We get a term of $\hom_P(e, e')$ by noting we have functors 
+\end{proof}
+
+
+
+\section{Operads}
+
+
+\begin{definition}
+  A family of operators is given by 
+  \begin{enumerate}
+    \item $ \mathcal{O}^\otimes : \cF_\ast \to \UU $
+    \item \[\prod_{X Y :\cF_\ast } 
+            \prod_{f : X \to_{\cF_\ast} Y} 
+            \mathrm{inert}(f) \to 
+            \prod_{a : \Oc(X)} 
+            \sum_{b : \Oc{Y}} 
+            \sum_{g : a \to_{\Oc(f)} b}
+            \mathrm{isCoCart} g \]
+          That is all inert arrows have cocartesian lifts
+    \item Let $a : \Oc(X)$ and $b : \Oc(Y)$. 
+          We may obtain for each $\rho : X \to \langle 1 \rangle$, a term $c : \Oc(\langle 1 \rangle)$ and a cocartisian lift $f : b \to c_\rho$ over $\rho$.
+          We ask that the natural map 
+          \[ \]
+  \end{enumerate}
+\end{definition}
+
+\section{A list of questions for Ulrik}
+
+\paragraph{Some modal type theory}
+
+Let $C :_\flat \UU$ be a category.
+and $\phi :_\sharp \langle \flat \mid C \rangle \to \Prop_{\boxslash}$.
+Define 
+\[ C_\phi = \sum_{c : C} \langle \sharp \mid \phi(c^\eta) \rangle \]  
+
+How can we apply $\phi(c^eta)$. Here we have $c : C$ so that $c^\eta : C^\eta$, 
+but that's it. 
+Can we get from $C^\eta$ to $\langle flat \mid C \rangle$?
+\end{document}

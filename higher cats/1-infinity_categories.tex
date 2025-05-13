@@ -89,9 +89,41 @@ Apart from the usual examples, to cook up more examples we will use simplicially
     Additionally noting that the maps $c : \Set \to \sSet$ and $\pi_0, \mathrm{ev}_0 : \sSet \to \Set$ are monoidal, we obtain maps
     \[ c : \mathrm{Cat} \to \mathrm{Cat}_\Delta \]
     \[ \pi, u : \mathrm{Cat}_\Delta \to \mathrm{Cat} \]
+    These form an adjoint triple $\pi \dashv c \dashv u$
 \end{definition}
 
 \begin{definition}
     A simplicial functor $f : \cat{C} \to \cat{D}$ of simplicial categories is a \textbf{weak equivalence} if it is a weak equivalence on hom simplicial sets,
-    and 
+    and $\pi(f) : \pi(\cat{C}) \to \pi(\cat{D})$ is essentially surjective.
+
+    This is the ``weak'' version of being fully faithful and essentially surjective.
 \end{definition}
+
+\begin{definition}
+    A morphism $f$ in a simplicial category $\cC$ is a zero cell of $\cC(x, y)$.
+    It is an \textbf{equivalence} if $\pi(f)$ is an isomorphism.
+\end{definition}
+
+Now we would like to perform he nerve construction on simplicial categories.
+For this we ened to define the simplicially enriched version of $[n]$.
+
+\begin{definition}
+    Let $J$ be a finite non-empty linearly ordered set and $i, j : J$.
+    Let $P_{i,j} := \{ I \subseteq J \mid i, j \in I \text{ and } k \in I \Rightarrow i \leq k \leq j \}$
+    This is partially ordered by inclusion.
+
+    If $i \leq j \leq k$ there is a canonical map
+    \[ P_{i, j} \times P_{j,k} \to P_{i,k} \]
+    given by the union.
+
+    We can use this to define a simplicial category $\cC[\Delta^J]$ with
+    \begin{enumerate}
+        \item Objects $J$
+        \item morphisms $i \to j$ given by the simplicial set $N(P_{i,j})$.
+    \end{enumerate}
+    Composition is induced by the canonical map.
+\end{definition}
+
+We can explicitly describe these homsets, since for all $n$ we have $P_{0,n} \simeq [1]^{n-1}$, 
+by taking the indicator of the subset.
+We can also see $P_{i, j} \simeq P_{0, j-i}$. 

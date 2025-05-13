@@ -9,6 +9,71 @@
 \begin{document}
 \maketitle
 
+% \section{Grothendieck group for Monoidal Categories}
+
+% \begin{definition}
+%     A rig category is a category $\cC$ equipped with 
+%     \begin{enumerate}
+%         \item Two symmetric monoidal structures $(+, 0, a, c, l, r)$ and $(\cdot, 1, a', c', l', r')$.
+%         \item Distributors $d : x(y + z) \simeq xy + xz$ and $d' : (x + y)z \simeq xz + yz$.
+%         \item Absorbers $n : x0 \simeq 0$ and $n' : 0x \simeq 0$.
+%     \end{enumerate}
+%     Satisfying a number of coherence conditions
+% \end{definition}
+
+% We will call such a rig category a ring category if the monoidal structure $(+, 0, a, c, l, r)$ defines a $2$-group.
+
+% Let $M$ be a symmetric monoidal category.
+% \begin{definition}
+%     $M$ is \textbf{traced} if there is a family of functions 
+%     \[ (\_ \ominus U ): \Hom(X \oplus U, Y \oplus U) \to \Hom(X, Y)\]
+%     satisfying:
+%     \[ (f \circ (g \oplus U)) \ominus U = (f \ominus U) \circ g \]
+%     \[ (g \oplus U) \circ f \ominus U = g \circ (f \ominus U) \]
+%     For any $f : X \oplus U \to Y \oplus V$  :
+%     \[ (Y \oplus g) \circ f \ominus U = f \circ (X \oplus g) \ominus V\] 
+%     For any $f : X \oplus I \to Y \oplus I$ :
+%     \[f \ominus 0 = \rho_Y \circ f \circ \rho_X^{-1}\]
+%     For any $f : X \oplus U \oplus V \to Y \oplus U \oplus V$ 
+%     \[ (f \ominus V) \ominus U = f \ominus (U \oplus V)\]
+%     For any $f : X \oplus U \to Y \oplus U$ and $g : W \to Z$
+%     \[ g \oplus (f \ominus U) = (g \oplus f) \ominus U\]
+%     \[ \mathrm{sym}_{X} \ominus X = \id_X \]
+% \end{definition}
+
+
+% From this we can form the Int construction by defining a new category 
+% \begin{definition}
+%     $\mathrm{Int}(M)$ has objects given by pairs of objects in $M$ and
+%     morphisms 
+%     \[ f : (X^+, X^-) \to (Y^+, Y^-) \]
+%     \[ f : X^+ \oplus Y^- \to Y^+ \oplus X^-  \]
+%     Composition is defined using $\ominus$
+% \end{definition}
+
+% Let $W$ be the class of maps $f$ in $\mathrm{Int}(M)$ such that $f$ is an isomorphism
+% in $M$.
+% We consider the localisation of $M$ at $W$.
+
+% Note $W$ is a very good class: It is a left and right calculus of fractions.
+
+% Call this category $G(M)$.
+
+% \begin{definition}
+%     $G(M)$ has a symmetric monoidal product structure:
+%     \[ \oplus : G(M) \times G(M) \to G(M) \]
+%     \[ (X^+, X^-) \oplus (Y^+, Y^-) = (X^+ \oplus Y^+, X^- \oplus Y^-) \]
+% \end{definition}
+
+% Furthermore if $M$ is actually a rig category then $G(M)$ has a second symmetric monoidal structure.
+% \[ \otimes : G(M) \times G(M) \to G(M) \]
+% \[ X \otimes Y := (X^+ \otimes Y^+ \oplus X^- \otimes Y^-, X^+ \otimes Y^- \oplus X^- \otimes Y^+)\]
+% With unit given by $(I, 0)$.
+
+
+\section{The Category of Virtual Sets} 
+
+
 \begin{definition}
     Given an injective map $f : X + A \to Y + A$, where $A$ is finite, we define a new map 
     \[ (f - A) : X \to Y \] 
@@ -28,7 +93,34 @@
     and since $A$, we will eventually hit an element of $Y$.
 \end{definition}
 
-We can prove a number of addition rules for these functions
+\begin{theorem}
+  The operation $(\_ - A)$ forms a trace on the category of finite sites with injections.
+
+  That is:
+  \begin{enumerate}
+    \item For any $f : Y + A \to Z + A$ and $g : X \to Y$ we have: 
+    \[ (f \circ (g + A)) - A = (f - A) \circ g \]
+    \item For any $f : Y \to Z$ and $g : X + A \to Y + A$ we have: 
+    \[ ((f + A) \circ g) - A = f \circ (g - A) \]
+    \item 
+    For any $f : X + A \to Y + B$ and $g : B \to A$
+    \[ ((Y + g) \circ f) - A = (f \circ (X + g)) - B\]
+    \item
+    For any $f : X + 0 \to Y \oplus 0$:
+    \[f - 0 = \rho_Y \circ f \circ \rho_X^{-1}\]
+    where $\rho_Z : Z \to Z + 0$ is the natural isomorphism.
+    \item 
+    For any $f : X + A + B \to Y + A + B$:
+    \[ (f - B) - A = f - (A + B)\]
+    \item
+    For any $f : X + A \to Y + A$ and $g : W \to Z$
+    \[ g + (f - A) = (g + f) - A\]
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  We present a partial proof in the following lemmas.
+\end{proof}
+
 \begin{lemma}
     Given $f : X \to Y$ we have $(f + A) - A = f$.
 \end{lemma}
@@ -70,7 +162,7 @@ We can prove a number of addition rules for these functions
 Given these we are now in a position to work with virtual sets.
 
 \begin{definition}
-    The category of virtual sets is given by 
+    Define a category by 
     \begin{itemize}
         \item Objects pairs of finite sets $(X^+, X^-)$
         \item Morphisms $X \to Y$ given by an injective map $X^+ + Y^- \to Y^+ + X^-$.
@@ -133,4 +225,54 @@ We now check that composition is associative.
     So we must have $| Y^+ | \geq | X^+ |$
     Arguing dually we see that $|Y^+| = |X^+|$ and so we deduce $|Y^-| = |X^-|$.
 \end{remark}
+
+Composition behaves differently then we would expect on most morphisms.
+But on morphisms given by a pair of injective maps everything works out correctly.
+
+\begin{definition}
+    Specifically given $f : X^+ \to Y^+$ and $g : Y^- \to X^-$ we obtain a map
+    \[\langle f, g \rangle := f + g : X^+ + Y^- \to Y^+ + X^- = X \to Y \]
+\end{definition}
+
+\begin{lemma}
+    Given $\langle f_0, g_0 \rangle : X \to Y$ and $\langle f_1, g_1 \rangle : Y \to Z$ we have
+    \[\langle f_1, g_1 \rangle \circ \langle f_0, g_0 \rangle  = \langle f_1 \circ f_0, g_1 \circ g_0 \rangle\] 
+\end{lemma}
+\begin{proof}
+    This is clear since $(f_1 +g_1 +X^-) \circ (f_0 + g_0 + Z^-)= (f_1 \circ f_0) + g_1 + g_0 : X^+ + Z^- + Y^- \to Z^+ + Y^- + X^-$
+    Thus subtracting off ... \todo{}
+\end{proof}
+
+Let $W$ be the class of morphisms which are bijections as set functions.
+
+\begin{definition}
+  A \textbf{congruence} on a category $\cC$ is an equivalence relation $\sim_{a,b}$ on each $\hom_\cC(a, b)$ such that if $f_1 ~_{a, b} f_2$ and $g_1 ~_{b, c} g_2$ then $g_1 \circ f_1 ~_{a, c} g_2 \circ f_2$.
+\end{definition}
+
+Given a family of relations $R_{a, b}$ on $\hom_\cC(a, b)$ we can create the congruence generated by $R$ by taking the symmetric, reflexive, transitive and composition closure of $R$.
+
+Let $~$ be the congreunce relation on $\cC$ generated by for all $f \in W$ that $f \circ f^{-1} \sim \id$. 
+
+We define the category $\VSet := \cC / \sim$ to be the quotient of $\cC$ by this congreunce relation.
+
+\begin{definition}
+    The category $\cC$ has two monoidal products on it, given by addition and multiplication.
+    Specifically
+    \[ \oplus : \cC \times \cC \to \cC \]
+    \[ X \oplus Y := (X^+ + Y^+, X^- + Y^-) \]
+    Functorial action is given by identity on the added component
+    The associator is given by the isomorphism on $\cC$ by the pair of associators on each component.
+    The monoidal unit is given by $(0, 0) \in \cC$, with similar unitors given by pairs of unitors.
+
+    Since composition of pairs acts just as composition pairwise, the coherence conditions reduce to coherence conditions in $\Set$.
+    
+    The second monoidal product is given by 
+    \[ X \otimes Y := (X^+ \times Y^+ + X^- \times Y^-, X^+ \times Y^- + X^- \times Y^+)\]
+    With unit given by $(1, 0)$.
+\end{definition}
+
+\begin{theorem}
+  These monoidal products descend to the category $\VSet$ with the quotient $\cC \to \VSet$ being a monoidal functor.
+\end{theorem}
+
 \end{document}
